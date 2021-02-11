@@ -13,7 +13,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-/**
+/*
  *
  * @author Heath
  */
@@ -35,7 +35,7 @@ public class ListSendViewDistance implements CommandExecutor  {
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     //do stuff
                     Bukkit.getOnlinePlayers().forEach((player) -> {
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + " - Client/Send View Distance: " + player.getSendViewDistance() + " Client Render Distance: " + player.getClientViewDistance());
+                        sender.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + "  -  Send View Distance: " + player.getSendViewDistance() + "  -  Render Distance: " + player.getClientViewDistance());
                     });
             });
             return true;
