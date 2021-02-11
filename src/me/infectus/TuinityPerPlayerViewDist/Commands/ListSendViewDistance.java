@@ -28,10 +28,14 @@ public class ListSendViewDistance implements CommandExecutor  {
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!sender.hasPermission("vd.admin")) {
+            sender.sendMessage(ChatColor.LIGHT_PURPLE + "You do not have permission to use that command.");
+            return false;
+        }
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     //do stuff
                     Bukkit.getOnlinePlayers().forEach((player) -> {
-                        sender.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + " - Client/Send View Distance: " + player.getSendViewDistance());
+                        sender.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + " - Client/Send View Distance: " + player.getSendViewDistance() + " Client Render Distance: " + player.getClientViewDistance());
                     });
             });
             return true;
