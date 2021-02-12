@@ -1,26 +1,51 @@
 package me.infectus.TuinityPerPlayerViewDist;
 
+import java.lang.reflect.Method;
+import java.lang.Class;
 import java.util.HashMap;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
 import me.infectus.TuinityPerPlayerViewDist.Commands.ListSendViewDistance;
+import me.infectus.TuinityPerPlayerViewDist.Listeners.onPlayerLeave;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 
 
-@Log
+@Log(topic="TuinityPerPlayerViewDist")
 public class Main extends JavaPlugin {
     
-    public HashMap<String, Boolean> playerUsingPermBasedVd = new HashMap<>();
+    public static HashMap<String, Boolean> playerUsingPermBasedVd = new HashMap<>();
     
     @Override
     public void onEnable() {
         
-        this.getCommand("svd").setExecutor(new ListSendViewDistance(this));
+        PluginManager pluginManager = getServer().getPluginManager();
         
+        //check to make sure this server is supported
+        try {
+            Player.class.getMethod("setNoTickViewDistance", int.class);
+            Player.class.getMethod("getNoTickViewDistance");
+            Player.class.getMethod("getSendViewDistance");
+        } catch (NoSuchMethodException | SecurityException e) {
+            // TODO Auto-generated catch block
+            pluginManager.disablePlugin(this);
+            log.log(Level.SEVERE, "{0}Server is not running a compatible version of Tuinity. Plugin disabled.", ChatColor.RED);
+            return;
+        }
+        
+        //register leave event so we can cleanup after ourselves
+        pluginManager.registerEvents(new onPlayerLeave(), this);
+        
+        //register command
+        PluginCommand cmd = this.getCommand("svd");
+        if(cmd != null) cmd.setExecutor(new ListSendViewDistance(this));
+        
+        //asynchronously check player permissions once every 5 seconds and update their unticked view distance accordingly
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             Bukkit.getOnlinePlayers().forEach((player) -> {
                 int vd = getVdPermission(player);
