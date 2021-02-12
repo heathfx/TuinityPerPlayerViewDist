@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.tuinity</groupId>
+  <artifactId>tuinity-api</artifactId>
+  <versioning>
+    <release>1.16.5-R0.1-SNAPSHOT-playerchunkloading</release>
+    <versions>
+      <version>1.16.5-R0.1-SNAPSHOT-playerchunkloading</version>
+    </versions>
+    <lastUpdated>20210212063227</lastUpdated>
+  </versioning>
+</metadata>
