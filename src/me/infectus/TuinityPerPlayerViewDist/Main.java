@@ -1,7 +1,5 @@
 package me.infectus.TuinityPerPlayerViewDist;
 
-import java.lang.reflect.Method;
-import java.lang.Class;
 import java.util.HashMap;
 import java.util.logging.Level;
 import lombok.extern.java.Log;
@@ -14,7 +12,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-
+import org.bstats.bukkit.Metrics;
 
 @Log(topic="TuinityPerPlayerViewDist")
 public class Main extends JavaPlugin {
@@ -37,6 +35,10 @@ public class Main extends JavaPlugin {
             log.log(Level.SEVERE, "{0}Server is not running a compatible version of Tuinity. Plugin disabled.", ChatColor.RED);
             return;
         }
+        
+        //set up bStats
+        int pluginId = 10301;
+        Metrics metrics = new Metrics(this, pluginId);
         
         //register leave event so we can cleanup after ourselves
         pluginManager.registerEvents(new onPlayerLeave(), this);
