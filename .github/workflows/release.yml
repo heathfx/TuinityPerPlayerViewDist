@@ -13,9 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Read release.md file
-        id: getnotes
-        run: echo "RELNOTES=$(cat release.md)" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -24,6 +21,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: TuinityPerPlayerViewDist ${{ github.ref }}
-          description: ${{ steps.getnotes.outputs.relnotes }}
+          body_path: release.md
           draft: false
           prerelease: false
