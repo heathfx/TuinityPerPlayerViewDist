@@ -3,7 +3,7 @@ name: Attach Build Artifact to Release
 on:
   release:
     types:
-    - created
+    - published
 
 jobs:
   publish:
