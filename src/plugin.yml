@@ -1,7 +1,7 @@
 main: me.infectus.TuinityPerPlayerViewDist.Main
 name: TuinityPerPlayerViewDist
 version: ${project.version}
-description: "Sets per-player unticked view-distance via permissions. Requres tuinity!"
+description: "Sets per-player no-tick-view-distance using player permissions. Requres tuinity!"
 author: infectus
 api-version: 1.16
 commands:
