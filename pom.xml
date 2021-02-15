@@ -58,6 +58,7 @@
             <resource>
                 <filtering>true</filtering>
                 <directory>src</directory>
+				<filtering>true</filtering>
                 <includes>
                     <include>config.yml</include>
                     <include>plugin.yml</include>
