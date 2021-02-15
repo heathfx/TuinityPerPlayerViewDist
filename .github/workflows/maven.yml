@@ -7,13 +7,9 @@ on:
   push:
     paths:
       - 'src/**'
-    tags-ignore:
-      - 'v*'
   pull_request:
     paths:
       - 'src/**'
-    tags-ignore:
-      - 'v*'
 
 jobs:
   build:
