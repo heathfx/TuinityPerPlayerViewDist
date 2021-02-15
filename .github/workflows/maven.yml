@@ -7,9 +7,11 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'pom.xml'
   pull_request:
     paths:
       - 'src/**'
+      - 'pom.xml'
 
 jobs:
   build:
