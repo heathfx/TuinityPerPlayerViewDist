@@ -6,10 +6,14 @@ name: Java CI with Maven
 on:
   push:
     paths:
-      - src/**
+      - 'src/**'
+    tags-ignore:
+      - 'v*'
   pull_request:
     paths:
-      - src/**
+      - 'src/**'
+    tags-ignore:
+      - 'v*'
 
 jobs:
   build:
