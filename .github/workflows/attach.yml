@@ -1,4 +1,4 @@
-name: Attach Build Artifact to Release
+name: Release Build
 
 on:
   release:
