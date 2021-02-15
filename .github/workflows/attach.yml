@@ -15,6 +15,9 @@ jobs:
       id: get_version
       run: |
         echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    - name: Read release.md file
+      id: getnotes
+      run: echo "RELNOTES=$(cat release.md)" >> $GITHUB_ENV
     - name: update release
       id: update_release
       uses: tubone24/update_release@v1.0
@@ -22,7 +25,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         release_name: TuinityPerPlayerViewDist ${{ steps.get_version.outputs.VERSION }}
-        body_path: release.md
+        body: ${{ steps.getnotes.outputs.relnotes }}
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
