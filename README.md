@@ -1,5 +1,3 @@
-![Attach Build Artifact to Release](https://github.com/heathfx/TuinityPerPlayerViewDist/workflows/Release%20Build/badge.svg)
-
 TuinityPerPlayerViewDistance uses permissions to set per-player un-ticked view-distance that goes above the value configured in paper.yml
 
 ### Features
