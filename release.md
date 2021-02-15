@@ -1,2 +1,3 @@
 ## Release Notes
-* use maven resource include filtering to set version in plugin.yml
+* update build badge on readme
+* make CI action only run on dev branch pushes

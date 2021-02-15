@@ -1,4 +1,4 @@
-![Java CI with Maven](https://github.com/heathfx/TuinityPerPlayerViewDist/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Build Status](https://github.com/heathfx/TuinityPerPlayerViewDist/workflows/Attach%20Build%20Artifact%20to%20Release/badge.svg?branch=master)
 
 TuinityPerPlayerViewDistance uses permissions to set per-player un-ticked view-distance that goes above the value configured in paper.yml
 
