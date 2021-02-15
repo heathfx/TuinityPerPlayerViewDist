@@ -17,7 +17,7 @@ jobs:
         echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: Read release.md file
       id: getnotes
-      run: echo "RELNOTES=$(cat release.md)" >> $GITHUB_ENV
+      run: echo "::set-output name=relnotes::$(cat release.md)"
     - name: update release
       id: update_release
       uses: tubone24/update_release@v1.0
