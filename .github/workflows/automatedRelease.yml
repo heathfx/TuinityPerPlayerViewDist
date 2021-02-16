@@ -1,0 +1,57 @@
+name: Automated Release
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'pom.xml'
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - 'pom.xml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Get version from pom XML
+      id: getxml
+      uses: mavrosxristoforos/get-xml-info@1.0
+      with:
+        xml-file: 'pom.xml'
+        xpath: '/project/version'
+        
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Build with Maven
+      run: |
+        export MVN_ARGS="-DbuildNumberSuffix="
+        mvn ${MVN_ARGS} package
+        echo "FILENAME=$(mvn ${MVN_ARGS} org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.build.finalName -q -DforceStdout)" >> $GITHUB_ENV
+
+#create new release here
+#        tag: v${{ steps.getxml.outputs.info }}
+#        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.info }}
+#        body_path: release.md
+
+    - name: Upload JAR
+      uses: jasonetco/upload-to-release@v0.1.1
+      with:
+        args: target/${{ env.FILENAME }}.jar application/java-archive
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
