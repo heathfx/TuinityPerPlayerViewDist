@@ -44,10 +44,17 @@ jobs:
         mvn ${MVN_ARGS} package
         echo "FILENAME=$(mvn ${MVN_ARGS} org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.build.finalName -q -DforceStdout)" >> $GITHUB_ENV
 
-#create new release here
-#        tag: v${{ steps.getxml.outputs.info }}
-#        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.info }}
-#        body_path: release.md
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.getxml.outputs.info }}
+        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.info }}
+        body_path: release.md
+        draft: false
+        prerelease: false
 
     - name: Upload JAR
       uses: jasonetco/upload-to-release@v0.1.1
