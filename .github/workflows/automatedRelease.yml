@@ -37,9 +37,9 @@ jobs:
     - name: Get version from pom XML
       id: getxml
       uses: mavrosxristoforos/get-xml-info@1.0
-        with:
-          xml-file: 'pom.xml'
-          xpath: '/project/version/text()'
+      with:
+        xml-file: 'pom.xml'
+        xpath: '/project/version/text()'
 
     - name: Create Release
       id: create_release
