@@ -4,8 +4,10 @@ on:
   push:
     paths-ignore:
       - '!pom.xml'
+      - '**'
     branches-ignore:
       - '!master'
+      - '**'
 
 jobs:
   publish:
@@ -34,10 +36,10 @@ jobs:
 
     - name: Get version from pom XML
       id: getxml
-      uses: QwerMike/xpath-action@v1
-      with:
-        filename: 'pom.xml'
-        expression: '//project/version'
+      uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: 'pom.xml'
+          xpath: '/project/version/text()'
 
     - name: Create Release
       id: create_release
@@ -45,8 +47,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.getxml.outputs.result }}
-        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.result }}
+        tag_name: v${{ steps.getxml.outputs.info }}
+        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.info }}
         body_path: release.md
         draft: false
         prerelease: false
