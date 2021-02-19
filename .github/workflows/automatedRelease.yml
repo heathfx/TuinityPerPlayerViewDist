@@ -22,11 +22,8 @@ jobs:
     - uses: actions/checkout@v1
         
     - name: Get version from pom XML
-      id: getxml
-      uses: mavrosxristoforos/get-xml-info@1.0
-      with:
-        xml-file: 'pom.xml'
-        xpath: '//version'
+      run: |
+        echo "VERSION=$(cat pom.xml | grep -oPm 1 '(?<=<version>).*?(?=</version>)')" >> $GITHUB_ENV
         
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
@@ -52,8 +49,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.getxml.outputs.info }}
-        release_name: TuinityPerPlayerViewDist v${{ steps.getxml.outputs.info }}
+        tag_name: v${{ env.VERSION }}
+        release_name: TuinityPerPlayerViewDist v${{ env.VERSION }}
         body_path: release.md
         draft: false
         prerelease: false
