@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#    - name: Extract branch name
-#      shell: bash
-#      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-#      id: extract_branch
-#      
-#    - name: cancelling
-#      uses: andymckay/cancel-action@0.2
-#      if: steps.extract_branch.outputs.branch != 'master'
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+      id: extract_branch
+      
+    - name: cancelling
+      uses: andymckay/cancel-action@0.2
+      if: steps.extract_branch.outputs.branch != 'master'
     
     - uses: actions/checkout@v1
         
