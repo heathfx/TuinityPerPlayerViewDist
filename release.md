@@ -1,2 +1,3 @@
 ## Release Notes
-* add action to automatically create release when master is updated
+* add a config file
+* new feature to limit the view distance for players below a configurable y-level per-world
