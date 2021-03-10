@@ -1,0 +1,19 @@
+# TuinityPerPlayerViewDist
+# by HeathFX
+
+#how often in seconds to check the permissions and locations of players
+player-check-interval: 5
+
+#per-world settings - save server resources by not sending as many chunks to players that are likely
+#to be underground, not able to see very far anyways.
+#remove or comment out a world from this list to disable the feature for that world
+#remove or comment out the "worlds" section entirely to completely disable this feature
+worlds:
+    world:
+        #restrict the view distance when player is below a certain y level
+        reduce-view-distance-below-y: 60
+        view-distance: 5
+    world_nether:
+        #restrict the view distance when player is below a certain y level
+        reduce-view-distance-below-y: 30
+        view-distance: 4
