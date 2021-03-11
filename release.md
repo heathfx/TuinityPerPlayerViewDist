@@ -1,3 +1,2 @@
 ## Release Notes
-* add a config file
-* new feature to limit the view distance for players below a configurable y-level per-world
+* add config option to control verbose logging (printing console message every time a player's view-distance changes)

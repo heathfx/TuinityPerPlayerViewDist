@@ -80,7 +80,7 @@ public class Main extends JavaPlugin {
                     if(playerUsingPermBasedVd.containsKey(pName) && playerUsingPermBasedVd.get(pName)) {
                         player.setNoTickViewDistance(vd);
                         playerUsingPermBasedVd.put(pName, false);
-                        log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to the server default for player {2} because no vd.max.<vd> permission node was found.", new Object[]{ChatColor.AQUA, currentVd, pName});
+                        if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to the server default for player {2} because no vd.max.<vd> permission node was found.", new Object[]{ChatColor.AQUA, currentVd, pName});
                     }
                     return;
                 }
@@ -90,9 +90,9 @@ public class Main extends JavaPlugin {
                 player.setNoTickViewDistance(vd);
                 playerUsingPermBasedVd.put(pName, true);
                 if(vd < yLevelVD) {
-                    log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} via permissions.", new Object[]{ChatColor.AQUA, currentVd, vd, pName});
+                    if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} via permissions.", new Object[]{ChatColor.AQUA, currentVd, vd, pName});
                 } else {
-                    log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} becase they are below y-level {4} in {5}.", new Object[]{ChatColor.AQUA, currentVd, vd, pName, yLevel, worldName});
+                    if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} becase they are below y-level {4} in {5}.", new Object[]{ChatColor.AQUA, currentVd, vd, pName, yLevel, worldName});
                 }
             });
             
