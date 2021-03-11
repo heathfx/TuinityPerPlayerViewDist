@@ -23,12 +23,12 @@ TuinityPerPlayerViewDistance uses permissions to set per-player un-ticked view-d
 #how often in seconds to check the permissions and locations of players
 player-check-interval: 5
 
-# - per-world settings - save server resources by not sending as many chunks to players that are likely
-#   to be underground, not able to see very far anyways.
+# - per-world settings - save server resources by not sending as many chunks to players that are
+#   likely to be underground, not able to see very far anyways.
 # - remove or comment out a world from this list to disable the feature for that world
 # - remove or comment out the "worlds" section entirely to completely disable this feature
-# - the worlds MUST MATCH your specific world names (not the dimension types). On PaperMC each dimension
-#   has it's own folder, those folder names are the world names.
+# - the worlds MUST MATCH your specific world names (not the dimension types). On PaperMC each
+#   dimension has it's own folder, those folder names are the world names.
 worlds:
     world:
         #restrict the view distance when player is below a certain y level
