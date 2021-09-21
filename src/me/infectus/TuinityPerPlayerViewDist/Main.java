@@ -61,38 +61,40 @@ public class Main extends JavaPlugin {
         //asynchronously check players at the interval from the config and update their unticked view distance accordingly
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             Bukkit.getOnlinePlayers().forEach((player) -> {
-                String worldName = player.getWorld().getName();
-                int yLevelVD = 32;
-                int yLevel = 0;
-                if(worldsCfg != null && worldsCfg.containsKey(worldName)) {
-                    Map<String, Integer> worldCfg = (Map<String, Integer>) worldsCfg.get(worldName);
-                    yLevel = worldCfg.get("y");
-                    if(player.getLocation().getBlockY() < yLevel)
-                        yLevelVD = worldCfg.get("vd");
-                }
-                int vd = min(getVdPermission(player), yLevelVD);
-                int currentVd = player.getNoTickViewDistance();
-
-                if(vd == currentVd) return; //nothing to do for this player.
-
-                String pName = player.getName();
-                if(vd == -1) {
-                    if(playerUsingPermBasedVd.containsKey(pName) && playerUsingPermBasedVd.get(pName)) {
-                        player.setNoTickViewDistance(vd);
-                        playerUsingPermBasedVd.put(pName, false);
-                        if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to the server default for player {2} because no vd.max.<vd> permission node was found.", new Object[]{ChatColor.AQUA, currentVd, pName});
+                if(!player.isDead()) {
+                    String worldName = player.getWorld().getName();
+                    int yLevelVD = 32;
+                    int yLevel = 0;
+                    if(worldsCfg != null && worldsCfg.containsKey(worldName)) {
+                        Map<String, Integer> worldCfg = (Map<String, Integer>) worldsCfg.get(worldName);
+                        yLevel = worldCfg.get("y");
+                        if(player.getLocation().getBlockY() < yLevel)
+                            yLevelVD = worldCfg.get("vd");
                     }
-                    return;
-                }
+                    int vd = min(getVdPermission(player), yLevelVD);
+                    int currentVd = player.getNoTickViewDistance();
 
-                if(vd > 32) vd = 32; //cap the max vd to 32 chunks
+                    if(vd == currentVd) return; //nothing to do for this player.
 
-                player.setNoTickViewDistance(vd);
-                playerUsingPermBasedVd.put(pName, true);
-                if(vd < yLevelVD) {
-                    if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} via permissions.", new Object[]{ChatColor.AQUA, currentVd, vd, pName});
-                } else {
-                    if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} becase they are below y-level {4} in {5}.", new Object[]{ChatColor.AQUA, currentVd, vd, pName, yLevel, worldName});
+                    String pName = player.getName();
+                    if(vd == -1) {
+                        if(playerUsingPermBasedVd.containsKey(pName) && playerUsingPermBasedVd.get(pName)) {
+                            player.setNoTickViewDistance(vd);
+                            playerUsingPermBasedVd.put(pName, false);
+                            if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to the server default for player {2} because no vd.max.<vd> permission node was found.", new Object[]{ChatColor.AQUA, currentVd, pName});
+                        }
+                        return;
+                    }
+
+                    if(vd > 32) vd = 32; //cap the max vd to 32 chunks
+
+                    player.setNoTickViewDistance(vd);
+                    playerUsingPermBasedVd.put(pName, true);
+                    if(vd < yLevelVD) {
+                        if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} via permissions.", new Object[]{ChatColor.AQUA, currentVd, vd, pName});
+                    } else {
+                        if(configManager.getBoolean(ConfigManager.CFG_DEBUG)) log.log(Level.INFO, "{0}Un-ticked view-distance changed from {1} to {2} for player {3} becase they are below y-level {4} in {5}.", new Object[]{ChatColor.AQUA, currentVd, vd, pName, yLevel, worldName});
+                    }
                 }
             });
             
